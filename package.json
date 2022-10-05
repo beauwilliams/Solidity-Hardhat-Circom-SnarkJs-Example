@@ -53,10 +53,16 @@
     "typechain": "^5.2.0",
     "typescript": "^4.6.4"
   },
+  "engines": {
+    "node": ">=16"
+  },
   "dependencies": {
     "@atixlabs/hardhat-time-n-mine": "^0.0.5",
     "@openzeppelin/contracts-upgradeable": "^4.7.0",
     "@openzeppelin/hardhat-upgrades": "^1.19.0",
+    "circomlib": "^2.0.5",
+    "circomlibjs": "^0.1.7",
+    "hardhat-circom": "^3.3.1",
     "hardhat-contract-sizer": "^2.6.1",
     "hardhat-deploy": "^0.11.11",
     "just": "^0.1.8"
