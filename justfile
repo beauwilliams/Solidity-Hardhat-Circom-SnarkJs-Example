@@ -35,18 +35,19 @@ install *PACKAGES:
 	@npm install {{PACKAGES}}
 snarkjs-calc-witness:
 	@echo "Calculating witness..."
-	@echo "NOTE: circom will generate it for us automatically, this operation is not necessary"
 	@snarkjs wtns calculate ./artifacts/circom/example.wasm ./circuits/example.json ./artifacts/circom/example.wtns
 snarkjs-gen-proof:
-    @snarkjs groth16 prove ./artifacts/circom/example.zkey ./artifacts/circom/example.wtns ./artifacts/circom/proof.json ./artifacts/circom/public.json
+	@echo "Generating proof..."
+	@snarkjs groth16 prove ./artifacts/circom/example.zkey ./artifacts/circom/example.wtns ./artifacts/circom/proof.json ./artifacts/circom/public.json
 snarkjs-verify-proof:
-    @snarkjs groth16 verify ./artifacts/circom/example.vkey.json ./artifacts/circom/public.json ./artifacts/circom/proof.json
+	@echo "Verifying proof..."
+	@snarkjs groth16 verify ./artifacts/circom/example.vkey.json ./artifacts/circom/public.json ./artifacts/circom/proof.json
 snarkjs-calc-gen-verify:
 	just snarkjs-calc-witness && just snarkjs-gen-proof && just snarkjs-verify-proof
 update:
 	@npm update
 compile:
-	@npm run circom-dev && just snarkjs-verify-proof
+	@npm run circom-dev && just snarkjs-calc-gen-verify
 deploy-localhost:
 	@npm run deploy-localhost
 deploy-testnet:

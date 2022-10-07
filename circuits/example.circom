@@ -5,11 +5,11 @@ template Main() {
     signal example_squared;
     signal output out;
 
-    example_squared <-- example * example + 2;
-    out <-- example_squared - example + 42;
+    example_squared <-- example * example;
+    out <-- example_squared - example + 9001;
 
-    example_squared === example * example + 2;
-    out === example_squared - example + 42;
+    example_squared === example * example;
+    out === example_squared - example + 9001;
 }
 
 component main = Main();
