@@ -155,7 +155,9 @@ const config: HardhatUserConfig = {
   },
   circom: {
     inputBasePath: "./circuits",
-    ptau: "https://hermezptau.blob.core.windows.net/ptau/powersOfTau28_hez_final_11.ptau",
+    ptau: "./ptau_02.ptau",
+    // NOTE: We can also automatically download the ptau too
+    // ptau: "https://hermezptau.blob.core.windows.net/ptau/powersOfTau28_hez_final_20.ptau",
     circuits: [
       {
         name: "example",
