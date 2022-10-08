@@ -3,8 +3,6 @@
 /* eslint-disable */
 import type * as exampleVerifierSol from "./ExampleVerifier.sol";
 export type { exampleVerifierSol };
-import type * as iExampleVerifierSol from "./IExampleVerifier.sol";
-export type { iExampleVerifierSol };
 import type * as exampleVerifierImplementationSol from "./exampleVerifierImplementation.sol";
 export type { exampleVerifierImplementationSol };
 export * as factories from "./factories";
@@ -12,5 +10,3 @@ export type { Verifier } from "./ExampleVerifier.sol/Verifier";
 export { Verifier__factory } from "./factories/ExampleVerifier.sol/Verifier__factory";
 export type { VerifierImplementation } from "./exampleVerifierImplementation.sol/VerifierImplementation";
 export { VerifierImplementation__factory } from "./factories/exampleVerifierImplementation.sol/VerifierImplementation__factory";
-export type { IVerifier } from "./IExampleVerifier.sol/IVerifier";
-export { IVerifier__factory } from "./factories/IExampleVerifier.sol/IVerifier__factory";

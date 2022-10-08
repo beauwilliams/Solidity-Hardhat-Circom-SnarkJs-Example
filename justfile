@@ -35,19 +35,22 @@ install *PACKAGES:
 	@npm install {{PACKAGES}}
 snarkjs-calc-witness:
 	@echo "Calculating witness..."
-	@snarkjs wtns calculate ./artifacts/circom/example.wasm ./circuits/example.json ./artifacts/circom/example.wtns
+	@snarkjs wtns calculate ./circuits/example.wasm ./circuits/example.json ./circuits/example.wtns
 snarkjs-gen-proof:
 	@echo "Generating proof..."
-	@snarkjs groth16 prove ./artifacts/circom/example.zkey ./artifacts/circom/example.wtns ./artifacts/circom/proof.json ./artifacts/circom/public.json
+	@snarkjs groth16 prove ./circuits/example.zkey ./circuits/example.wtns ./circuits/example.proof.json ./circuits/example.public.json
 snarkjs-verify-proof:
 	@echo "Verifying proof..."
-	@snarkjs groth16 verify ./artifacts/circom/example.vkey.json ./artifacts/circom/public.json ./artifacts/circom/proof.json
+	@snarkjs groth16 verify ./circuits/example.vkey.json ./circuits/example.public.json ./circuits/example.proof.json
 snarkjs-calc-gen-verify:
 	just snarkjs-calc-witness && just snarkjs-gen-proof && just snarkjs-verify-proof
 update:
 	@npm update
-compile:
+compile-circuit:
 	@npm run circom-dev && just snarkjs-calc-gen-verify
+compile-contracts:
+	@just _bold_red "If you get this error MalformedAbiError: Not a valid ABI, run rm -r ./artifacts/contracts"
+	@npm run compile
 deploy-localhost:
 	@npm run deploy-localhost
 deploy-testnet:

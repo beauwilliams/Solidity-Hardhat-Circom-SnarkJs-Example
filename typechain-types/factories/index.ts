@@ -2,5 +2,4 @@
 /* tslint:disable */
 /* eslint-disable */
 export * as exampleVerifierSol from "./ExampleVerifier.sol";
-export * as iExampleVerifierSol from "./IExampleVerifier.sol";
 export * as exampleVerifierImplementationSol from "./exampleVerifierImplementation.sol";

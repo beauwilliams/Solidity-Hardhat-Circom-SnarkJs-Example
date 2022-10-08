@@ -1,6 +1,7 @@
 import { expect, assert } from "chai";
 import { ethers, circuitTest } from "hardhat";
 import { exportCallDataGroth16 } from "../utils/calculate-verifier-calldata-groth16";
+import * as fs from 'fs'
 
 describe("example circuit", () => {
   let circuit: any;
@@ -25,11 +26,15 @@ describe("example circuit", () => {
       await ExampleVerifierImplementationContract.deploy();
 
     circuit = await circuitTest.setup("example");
+    // NOTE: We can retrieve the proof from the output of hardhat circom too
+    // let dataResult = fs.readFileSync('../artifacts/circom/proof.json')
     dataResult = await exportCallDataGroth16(
       exampleCircuitInputParams,
       "./circuits/example.wasm",
       "./circuits/example.zkey"
     );
+
+
 
     console.log(
       "------------------------------------------------------------------"
@@ -56,6 +61,8 @@ describe("example circuit", () => {
     console.log(
       "------------------------------------------------------------------"
     );
+    console.log(dataResult2);
+
   });
 
   it("Should produce a witness using snarkjs with valid constraints", async () => {
