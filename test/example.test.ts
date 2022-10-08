@@ -1,11 +1,17 @@
 import { expect, assert } from "chai";
 import { ethers, circuitTest } from "hardhat";
 import { exportCallDataGroth16 } from "../utils/calculate-verifier-calldata-groth16";
-import * as fs from 'fs'
+import * as fs from "fs";
+import proof = require('../circuits/example.proof.json')
+import input = require('../circuits/example.public.json')
+const { groth16 } = require("snarkjs");
+
+
 
 describe("example circuit", () => {
   let circuit: any;
   let dataResult: any;
+  let calldata: any;
   const exampleCircuitInputParams = {
     example: "42",
   };
@@ -27,7 +33,7 @@ describe("example circuit", () => {
 
     circuit = await circuitTest.setup("example");
     // NOTE: We can retrieve the proof from the output of hardhat circom too
-    // let dataResult = fs.readFileSync('../artifacts/circom/proof.json')
+    // dataResult = proof
     dataResult = await exportCallDataGroth16(
       exampleCircuitInputParams,
       "./circuits/example.wasm",
@@ -35,10 +41,11 @@ describe("example circuit", () => {
     );
 
 
+    //TODO: use calldata instead, to save gas insstead of named inputs
+    calldata = await groth16.exportSolidityCallData(proof, input);
+    calldata = JSON.parse("[" + calldata + "]")
 
-    console.log(
-      "------------------------------------------------------------------"
-    );
+
     console.log(
       "-------------------------------NOTE-------------------------------"
     );
@@ -49,19 +56,6 @@ describe("example circuit", () => {
       "------------------------------------------------------------------"
     );
     console.log(dataResult);
-    console.log(
-      "------------------------------------------------------------------"
-    );
-    console.log(
-      "------------------------------------------------------------------"
-    );
-    console.log(
-      "------------------------------------------------------------------"
-    );
-    console.log(
-      "------------------------------------------------------------------"
-    );
-    console.log(dataResult2);
 
   });
 
@@ -96,12 +90,17 @@ describe("example circuit", () => {
   });
 
   it("Implementation Contract of our Verifier contract should verify a valid proof and return true", async () => {
-    let result = await exampleVerifierImplementationContractDeployment.verifyProof(
-      dataResult.a,
-      dataResult.b,
-      dataResult.c,
-      dataResult.Input
-    );
+    let result =
+      await exampleVerifierImplementationContractDeployment.verifyProof(
+        dataResult.a,
+        dataResult.b,
+        dataResult.c,
+        dataResult.Input
+      );
     expect(result).to.equal(true);
+  });
+
+  it("Our Verifier contract should verify a valid proof and return true using calldata instead of named params", async () => {
+      await exampleVerifierImplementationContractDeployment.verifyProof(...calldata)
   });
 });
