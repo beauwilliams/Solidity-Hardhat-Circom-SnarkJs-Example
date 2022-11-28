@@ -2,6 +2,9 @@
 
 TODO: Document
 
+
+TODO: Add basic circuit to do a proof of something interesting
+
 ## OVERVIEW
 
 Includes deployment configurations, testing framework, contract upgrades pattern, gas usage report, security analysys audit, test coverage report.. did I also mention it's blazingly fast 😏
